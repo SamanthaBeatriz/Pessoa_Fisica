@@ -236,6 +236,13 @@ public class PessoaFisica extends JFrame{
 		btnImprimir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				
+				try {
+					Connection connection = JbdUtil.getConnection();
+					pessoajdbcDAO jdbcDao = new pessoajdbcDAO(connection);
+					jdbcDao.mostrar();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 				
 			}

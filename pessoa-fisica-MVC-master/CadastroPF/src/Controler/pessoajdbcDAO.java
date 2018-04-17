@@ -2,7 +2,10 @@ package Controler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import model.PessoaFisica2;
 
 public class pessoajdbcDAO {
@@ -22,12 +25,36 @@ public class pessoajdbcDAO {
 		prepareStatement.close();
  }
  public void mostrar() throws SQLException{
+	 Statement stms = conn.createStatement(); 
 	 String sql = "select * from pessoa";
-	 PreparedStatement prepareStatement = this.conn.prepareStatement(sql);
-	 prepareStatement.executeQuery(sql);
-	 prepareStatement.getResultSet();
-	 System.out.println(prepareStatement);
-	prepareStatement.close();
-		
+	 System.out.println(sql);
+	 
+	 try{
+	        stms = this.conn.prepareStatement(sql);
+	        ResultSet rs = stms.executeQuery(sql);
+	        model.PessoaFisica2 contato  =new  model.PessoaFisica2();
+	        while(rs.next()){
+	           
+	            contato.setNome(rs.getString("nome"));
+	            contato.setEndereco(rs.getString("endereco"));
+	            contato.setBairro(rs.getString("bairro"));
+	            contato.setCep(rs.getString("cep"));
+	            contato.setCidade(rs.getString("cidade"));
+	            contato.setTelefone(rs.getString("telefone"));
+	            contato.setCelular(rs.getString("celular"));
+	            contato.setRg(rs.getString("rg")); 
+	            contato.setCpf(rs.getString("cpf"));
+	            char b[] = rs.getString("sexo").toCharArray();
+	            contato.setSexo(b[0]);
+	            System.out.println("=====================================================");
+	           System.out.println(contato.getNome()+","+contato.getEndereco()+","+contato.getBairro() +","
+	            +contato.getCep()+","+contato.getCidade()+","+contato.getTelefone()+","+contato.getCelular()
+	           +","+contato.getRg()+","+contato.getCpf()+"  ");
+	           System.out.println("=====================================================");
+	        }
+	        
+	        }finally {
+	 stms.close();
  }
 }
+ }
